@@ -31,3 +31,9 @@ endfunction
 function Bit#(n) multiplexer_n(Bit#(1) sel, Bit#(n) a, Bit#(n) b);
     return (sel == 0)? a : b;
 endfunction
+
+// use and, or, not gate implement mux
+// mux = (a&~sel) | (b&sel)
+function Bit#(1) multiplexer_1(Bit#(1) sel, Bit#(n)a, Bit#(n) b);
+    return or1(and1(a,not1(sel)), and1(b,sel));
+endfunction

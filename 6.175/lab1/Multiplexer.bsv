@@ -21,10 +21,14 @@ endfunction
 function Bit#(5) multiplexer5(Bit#(1) sel, Bit#(5) a, Bit#(5) b); Bit#(5) muxout;
     //return (sel == 0)? a : b;
     //Exercise 2
-    for (Integer i = 0; i < 5; i = i + 1) begin
-        muxout[i] = multiplexer1(sel, a[i], b[i]);
-    end
-    return muxout;
+    //for (Integer i = 0; i < 5; i = i + 1) begin
+    //    muxout[i] = multiplexer1(sel, a[i], b[i]);
+    //end
+    //return muxout;
+
+    // Exercise 3
+
+    return multiplexer_n(sel,a,b);
 endfunction
 
 typedef 5 N;

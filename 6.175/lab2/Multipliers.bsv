@@ -13,12 +13,27 @@ function Bit#(TAdd#(n,n)) multiply_signed( Bit#(n) a, Bit#(n) b );
     return pack( product_int );
 endfunction
 
+function Bit#(TAdd#(n,1)) add_unsigned( Bit#(n) a, Bit#(n) b );
+    Int#(n) a_int = unpack(a);
+    Int#(n) b_int = unpack(b);
+    Int#(TAdd#(n,1)) product_int = zeroExtend(a_int) + zeroExtend(b_int);
+    return pack( product_int );
+endfunction
 
 
 // Multiplication by repeated addition
 function Bit#(TAdd#(n,n)) multiply_by_adding( Bit#(n) a, Bit#(n) b );
     // TODO: Implement this function in Exercise 2
-    return 0;
+    Bit#(n)tp   = 0;
+    Bit#(n)prod = 0;
+    let valn    = valueOf(n);
+    for (Integer i = 0; i < valn; i = i + 1) begin
+        Bit#(n)m            = (a[i] == 0)? 0 : b;
+        Bit#(TAdd#(n,1))sum = add_unsigned(m,tp);
+        prod[i]             = sum[0];
+        tp                  = sum[valn:1];
+    end
+    return {tp,prod};
 endfunction
 
 
@@ -42,9 +57,9 @@ module mkFoldedMultiplier( Multiplier#(n) );
     Reg#(Bit#(n)) tp <- mkRegU();
     Reg#(Bit#(TAdd#(TLog#(n),1))) i <- mkReg( fromInteger(valueOf(n)+1) );
 
-    rule mulStep( /* guard goes here */ );
+    //rule mulStep( /* guard goes here */ );
         // TODO: Implement this in Exercise 4
-    endrule
+    //endrule
 
     method Bool start_ready();
         // TODO: Implement this in Exercise 4
@@ -75,9 +90,9 @@ module mkBoothMultiplier( Multiplier#(n) );
     Reg#(Bit#(TAdd#(TAdd#(n,n),1))) p <- mkRegU;
     Reg#(Bit#(TAdd#(TLog#(n),1))) i <- mkReg( fromInteger(valueOf(n)+1) );
 
-    rule mul_step( /* guard goes here */ );
+    //rule mul_step( /* guard goes here */ );
         // TODO: Implement this in Exercise 6
-    endrule
+    //endrule
 
     method Bool start_ready();
         // TODO: Implement this in Exercise 6
@@ -108,9 +123,9 @@ module mkBoothMultiplierRadix4( Multiplier#(n) );
     Reg#(Bit#(TAdd#(TAdd#(n,n),2))) p <- mkRegU;
     Reg#(Bit#(TAdd#(TLog#(n),1))) i <- mkReg( fromInteger(valueOf(n)/2+1) );
 
-    rule mul_step( /* guard goes here */ );
+    //rule mul_step( /* guard goes here */ );
         // TODO: Implement this in Exercise 8
-    endrule
+    //endrule
 
     method Bool start_ready();
         // TODO: Implement this in Exercise 8

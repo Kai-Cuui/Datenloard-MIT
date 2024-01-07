@@ -6,6 +6,7 @@ import Multipliers::*;
 module mkTbDumb();
     function Bit#(16) test_function( Bit#(8) a, Bit#(8) b ) = multiply_unsigned( a, b );
     Empty tb <- mkTbMulFunction(test_function, multiply_unsigned, True);
+    //Empty tb <- mkTbMulFunction(multiply_unsigned, multiply_unsigned, True);
     return tb;
 endmodule
 
@@ -19,11 +20,17 @@ endmodule
 (* synthesize *)
 module mkTbSignedVsUnsigned();
     // TODO: Implement test bench for Exercise 1
+    function Bit#(16) test_function( Bit#(8) a, Bit#(8) b ) = multiply_signed( a, b );
+    Empty tb <- mkTbMulFunction(test_function, multiply_unsigned, True);
+    return tb;
 endmodule
 
 (* synthesize *)
 module mkTbEx3();
     // TODO: Implement test bench for Exercise 3
+    function Bit#(16) test_function( Bit#(8) a, Bit#(8) b ) = multiply_by_adding( a, b );
+    Empty tb <- mkTbMulFunction(test_function, multiply_unsigned, True);
+    return tb;
 endmodule
 
 (* synthesize *)
